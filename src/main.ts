@@ -2,4 +2,23 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 
-createApp(App).use(router).mount('#app')
+import axios from 'axios';
+const Axios = axios.create({
+    baseURL: "http://127.0.0.1:4523/m1/1363961-0-default/getMd",
+    timeout: 2000
+})
+import VMdPreview from '@kangc/v-md-editor/lib/preview';
+import '@kangc/v-md-editor/lib/style/preview.css';
+import githubTheme from '@kangc/v-md-editor/lib/theme/github.js';
+import '@kangc/v-md-editor/lib/theme/style/github.css';
+
+import hljs from 'highlight.js';
+
+VMdPreview.use(githubTheme, {
+  Hljs: hljs,
+});
+// createApp(App).use(router).mount('#app')    
+const app = createApp(App);
+app.use(VMdPreview);
+app.provide('$axios' , Axios);
+app.use(router).mount('#app');
