@@ -1,9 +1,8 @@
 <template>
   <main>
-    <div ref="preview">
+    <div ref="preview" class="detils-body">
       <v-md-preview :text="content"> </v-md-preview>
     </div>
-
     <div class="navigation-content" id="permiss">
       目录
       <div v-for="(item, index) in  atitles" :key="index + 'art'" @click="handleAnchorClick(item)">
@@ -18,13 +17,14 @@ import { inject, ref, nextTick } from 'vue'
 
 let content = ref('')
 const atitles = ref([])
-
+const preview = ref(null);
 const $axios = inject('$axios');
+
 $axios.get('').then(res => {
-  content.value = res.data.message;
+  content.value = res.data;
   getTitle();
 })
-const preview = ref(null);
+
 // 获取标题生成列表
 const getTitle = () => {
   nextTick(() => {
@@ -44,6 +44,7 @@ const getTitle = () => {
     
     nextTick(()=>{
       // 挂载样式
+
     })
   })
 }
@@ -52,5 +53,20 @@ const handleAnchorClick = (item) => {
   const heading = preview.value.querySelector(`[data-v-md-line="${lineIndex}"]`);
   console.log(heading);
   // 跳转
+  heading.scrollIntoView({behavior: "smooth", inline: "nearest"});
+  // 样式变更
 }
 </script>
+
+<style scoped>
+.detils-body{
+  width: 80%;
+  float: left;
+}
+.navigation-content{
+  width: 20%;
+  float: left;
+  position:fixed;
+  right:0px;
+}
+</style>

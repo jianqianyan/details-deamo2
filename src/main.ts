@@ -4,7 +4,7 @@ import router from './router'
 
 import axios from 'axios';
 const Axios = axios.create({
-    baseURL: "http://127.0.0.1:4523/m1/1363961-0-default/getMd",
+    baseURL: "http://localhost:3000/",
     timeout: 2000
 })
 import VMdPreview from '@kangc/v-md-editor/lib/preview';
